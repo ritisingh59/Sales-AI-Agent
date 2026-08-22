@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northstar One | AI Property Advisor (Riti)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-['Inter'] min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Top Navbar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/20">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="font-['Outfit'] font-bold text-lg text-white tracking-wide">NORTHSTAR HOMES</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-medium">Northstar One</span>
+          </div>
+          <p class="text-xs text-slate-400">Sector 79, Gurugram • 2 & 3 BHK Luxury Residences</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Voice Language / Accent Selector -->
+        <div class="flex items-center space-x-1 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1">
+          <i class="fa-solid fa-language text-amber-400 text-xs"></i>
+          <select id="voiceLangSelect" class="bg-transparent text-xs text-slate-200 focus:outline-none cursor-pointer">
+            <option value="auto" class="bg-slate-900 text-white">🌐 Auto (Hindi / Hinglish / Eng)</option>
+            <option value="hi-IN" class="bg-slate-900 text-white">🇮🇳 Hindi (हिन्दी)</option>
+            <option value="en-IN" class="bg-slate-900 text-white">🇮🇳 Hinglish / Indian English</option>
+            <option value="en-US" class="bg-slate-900 text-white">🇺🇸 English (Global)</option>
+          </select>
+        </div>
+
+        <!-- Voice TTS Toggle -->
+        <button id="ttsToggleBtn" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center space-x-2 transition-all" title="Toggle Spoken Voice Audio">
+          <i id="ttsIcon" class="fa-solid fa-volume-high text-amber-400"></i>
+          <span id="ttsLabel" class="hidden sm:inline">Voice: ON</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="resetChatBtn" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center space-x-1.5 transition-all">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span class="hidden sm:inline">Reset</span>
+        </button>
+
+        <!-- End & Generate Analytics Button -->
+        <button id="endSessionBtn" class="px-3 sm:px-4 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-semibold text-xs flex items-center space-x-1.5 sm:space-x-2 shadow-md shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition-all">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Extract Analytics</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    <!-- LEFT PANEL: Conversational Interface (7 Cols) -->
+    <section class="lg:col-span-7 flex flex-col bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+      <!-- Agent Status Header -->
+      <div class="px-4 py-3 bg-slate-800/60 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="relative">
+            <div class="w-9 h-9 rounded-full bg-slate-700 border border-amber-400/40 flex items-center justify-center text-amber-400 font-semibold text-sm">
+              A
+            </div>
+            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-slate-900"></span>
+          </div>
+          <div>
+            <div class="text-sm font-semibold text-white flex items-center space-x-1.5">
+              <span>Riti</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">AI Sales Advisor</span>
+            </div>
+            <p class="text-[11px] text-slate-400">English • Hindi • Hinglish (Voice & Chat Ready)</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="text-[11px] text-slate-400">Project Pricing:</span>
+          <p class="text-xs font-semibold text-amber-400">2 BHK @ ₹1.35 Cr+ | 3 BHK @ ₹1.75 Cr+</p>
+        </div>
+      </div>
+
+      <!-- Quick Scenario Triggers Carousel -->
+      <div class="px-4 py-2 bg-slate-950/40 border-b border-slate-800/80 overflow-x-auto whitespace-nowrap flex space-x-2 no-scrollbar">
+        <span class="text-[11px] text-slate-400 self-center font-medium pr-1">⚡ Quick Test:</span>
+        <button class="scenario-btn px-2.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-[11px] border border-slate-700/60 transition" data-text="नमस्ते, मुझे सेक्टर 79 वाले प्रोजेक्ट की 3 BHK कीमत और जानकारी चाहिए।">
+          🇮🇳 शुद्ध हिन्दी (Hindi)
+        </button>
+        <button class="scenario-btn px-2.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-[11px] border border-slate-700/60 transition" data-text="Namaste, mujhe Sector 79 project ke bare mein janna hai, 3 BHK pricing kya hai?">
+          🇮🇳 Hinglish 3 BHK
+        </button>
+        <button class="scenario-btn px-2.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-[11px] border border-slate-700/60 transition" data-text="1.75 Crore is too expensive for Sector 79, can you give me 15% discount?">
+          🏷️ Price & Discount
+        </button>
+        <button class="scenario-btn px-2.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-[11px] border border-slate-700/60 transition" data-text="Can I schedule a site visit for this Saturday at 11:00 AM for 3 BHK?">
+          📅 Book Visit (Success)
+        </button>
+        <button class="scenario-btn px-2.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-[11px] border border-slate-700/60 transition" data-text="I want to visit the site this Sunday at 4:00 PM.">
+          ⚠️ Slot Collision (Failure)
+        </button>
+        <button class="scenario-btn px-2.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-[11px] border border-slate-700/60 transition" data-text="I am in an important client meeting right now, please call me tomorrow at 4 PM.">
+          📞 Call Later
+        </button>
+        <button class="scenario-btn px-2.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 text-[11px] border border-slate-700/60 transition" data-text="I am not interested in Gurugram properties. Please do not call me again.">
+          🛑 DND Opt-Out
+        </button>
+      </div>
+
+      <!-- Chat Messages Scroll Area -->
+      <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-4 min-h-[420px] max-h-[500px]">
+        <!-- Welcome message generated in JS -->
+      </div>
+
+      <!-- Typing Indicator -->
+      <div id="typingIndicator" class="px-4 py-2 hidden text-xs text-slate-400 flex items-center space-x-2">
+        <div class="flex space-x-1">
+          <span class="w-2 h-2 bg-amber-400 rounded-full animate-bounce"></span>
+          <span class="w-2 h-2 bg-amber-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+          <span class="w-2 h-2 bg-amber-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+        </div>
+        <span>Riti is typing...</span>
+      </div>
+
+      <!-- Voice Listening Status Banner -->
+      <div id="listeningIndicator" class="hidden px-4 py-2 bg-rose-500/10 border-t border-rose-500/30 flex items-center justify-between text-xs text-rose-400">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+          <span id="listeningText" class="font-medium">🔴 Listening... Speak now (Hindi, Hinglish, or English)</span>
+        </div>
+        <button type="button" id="stopListeningBtn" class="text-[11px] px-2 py-0.5 rounded bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 transition">
+          Stop & Send
+        </button>
+      </div>
+
+      <!-- Chat Input Area -->
+      <form id="chatForm" class="p-3 bg-slate-800/50 border-t border-slate-800 flex items-center space-x-2">
+        <input 
+          id="userInput" 
+          type="text" 
+          placeholder="Type or click 🎙️ Mic to speak (English, Hindi, or Hinglish)..." 
+          class="flex-1 bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 transition"
+          autocomplete="off"
+        />
+        <button 
+          type="button" 
+          id="micBtn" 
+          class="p-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-amber-400 transition relative" 
+          title="Click to speak (Voice Input)"
+        >
+          <i class="fa-solid fa-microphone text-base"></i>
+        </button>
+        <button 
+          type="submit" 
+          id="sendBtn" 
+          class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-sm flex items-center space-x-1.5 transition shadow-md shadow-amber-500/20"
+        >
+          <span>Send</span>
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+      </form>
+      
+      <!-- Mic Helper Notification Toast -->
+      <div id="micHelperToast" class="hidden px-4 py-1.5 bg-amber-500/10 border-t border-amber-500/20 text-[11px] text-amber-300 flex items-center justify-between">
+        <span id="micHelperText">💡 Tip: Speak clearly into your microphone</span>
+        <button type="button" id="closeToastBtn" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: Lead Intelligence & Analytics (5 Cols) -->
+    <section class="lg:col-span-5 flex flex-col space-y-4">
+      
+      <!-- Live Agent State Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <h2 class="font-['Outfit'] font-semibold text-sm text-white flex items-center space-x-2">
+            <i class="fa-solid fa-bolt text-amber-400"></i>
+            <span>Live Agent & Tool State</span>
+          </h2>
+          <span id="leadBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 font-medium border border-slate-700">
+            Active Conversation
+          </span>
+        </div>
+
+        <!-- Tool Call Live Logs -->
+        <div class="mt-3">
+          <div class="text-[11px] font-medium text-slate-400 mb-1.5">Tool Execution Activity:</div>
+          <div id="toolActivityFeed" class="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800/80 text-xs font-mono space-y-1 min-h-[75px] max-h-[120px] overflow-y-auto">
+            <p class="text-slate-500">No tools invoked yet. Ready for site visit scheduling.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post-Conversation Lead Analytics Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex-1 flex flex-col">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <h2 class="font-['Outfit'] font-bold text-sm text-white flex items-center space-x-2">
+            <i class="fa-solid fa-chart-line text-emerald-400"></i>
+            <span>Lead Intelligence & CRM Summary</span>
+          </h2>
+          <span class="text-[10px] text-slate-400">Post-Interaction Analysis</span>
+        </div>
+
+        <div id="analyticsPlaceholder" class="flex-1 flex flex-col items-center justify-center text-center p-6 text-slate-500">
+          <i class="fa-solid fa-clipboard-user text-3xl text-slate-700 mb-3"></i>
+          <p class="text-xs">Chat with Riti or click any test scenario, then press <strong class="text-amber-400">"End & Extract Analytics"</strong> to generate CRM lead metrics.</p>
+        </div>
+
+        <div id="analyticsResults" class="hidden mt-4 space-y-3.5 text-xs">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-400 text-[10px] block">Interest Level</span>
+              <span id="anInterest" class="font-semibold text-emerald-400 text-sm">Hot</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-400 text-[10px] block">Configuration</span>
+              <span id="anConfig" class="font-semibold text-white text-sm">3 BHK</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-400 text-[10px] block">Estimated Budget</span>
+              <span id="anBudget" class="font-semibold text-amber-400">₹1.75 Cr+</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-400 text-[10px] block">Site Visit Status</span>
+              <span id="anVisitStatus" class="font-semibold text-indigo-400">Confirmed</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+            <span class="text-slate-400 text-[10px] block mb-1">Objections / Inquiries</span>
+            <div id="anObjections" class="flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px]">None</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+            <span class="text-slate-400 text-[10px] block mb-1">Follow-Up Requirement</span>
+            <div class="flex items-center space-x-2">
+              <span id="anFollowUpFlag" class="font-medium text-white">Yes</span>
+              <span id="anFollowUpNote" class="text-slate-400 text-[11px]">—</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
+            <span class="text-slate-400 text-[10px] block mb-1">Senior Escalation</span>
+            <span id="anEscalation" class="font-medium text-slate-300">No</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+            <span class="text-amber-400 text-[10px] font-semibold block mb-1">CRM Executive Summary</span>
+            <p id="anSummary" class="text-slate-300 text-[11px] leading-relaxed">
+              Customer successfully qualified for Northstar One.
+            </p>
+          </div>
+
+          <!-- Raw JSON Accordion -->
+          <details class="text-[11px] border border-slate-800 rounded-lg p-2 bg-slate-950/40">
+            <summary class="cursor-pointer text-slate-400 hover:text-white font-mono">View Raw Structured JSON</summary>
+            <pre id="anRawJson" class="mt-2 text-[10px] font-mono text-emerald-400 bg-black/60 p-2 rounded overflow-x-auto"></pre>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 py-3 text-center text-xs text-slate-500 bg-slate-950">
+    Northstar Homes AI Sales Engine 
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
