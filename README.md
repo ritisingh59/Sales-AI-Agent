@@ -1,4 +1,4 @@
-# 🏢 Sales AI Agent — AI Real Estate Sales Advisor
+# 🏢 NorthStar AI Agent — AI Real Estate Sales Advisor
 
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=flat&logo=python)](https://python.org)
